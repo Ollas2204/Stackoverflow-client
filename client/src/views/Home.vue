@@ -1,23 +1,20 @@
 <template>
   <div class="home">
-    <vs-row vs-w="12">
-      <HelloWorld/>
-    </vs-row>
-    <vs-row vs-w="12">
-      <Question/>
-    </vs-row>
+    <Homepage />
+    <Header />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import Question from '@/components/Question.vue'
+import Homepage from '@/components/Homepage.vue'
+import Header from '@/components/Header.vue'
+
 export default {
   name: 'home',
   components: {
-    HelloWorld,
-    Question
+    Homepage,
+    Header,
   }
 }
 </script>

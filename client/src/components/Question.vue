@@ -1,103 +1,115 @@
 <template>
-<vs-card vs-color="warning">
-  <vs-card-header vs-background-color="warning" vs-title="Another nice title" vs-subtitle="A nice subtitle" vs-icon="warning"></vs-card-header>
-  <vs-card-body>
-    <vs-row>
-      <vs-col vs-type="flex" vs-justify="flex-start" vs-align="flex-start" vs-w="2">
-        <md-avatar class="md-large">
-          <img src="/img/loose.jpg" alt="fox">
-        </md-avatar>
-      </vs-col>
-
-
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="10">
-        <vs-alert vs-title="HEX" vs-active="true" vs-color="#842993">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna a liqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
-        </vs-alert>
-      </vs-col>
-      <vs-col vs-type="flex" vs-justify="flex-end" vs-align="flex-end" vs-w="2">
-        <vs-row vs-w="12">
-          <md-button class="md-fab md-mini md-plain">
-            <i class="material-icons">
-                        thumb_down
-                    </i>
-          </md-button>
-        </vs-row>
-        <vs-row vs-w="12">
-          <vs-avatar :vs-badge="badge1" vs-text="Luisdaniel" vs-size="large" />
-        </vs-row>
-        <vs-row vs-w="12">
-          <md-button class="md-fab md-mini md-plain">
-            <i class="material-icons">
-                      thumb_up
-                    </i>
-          </md-button>
-        </vs-row>
-      </vs-col>
-    </vs-row>
-  </vs-card-body>
-  <vs-card-footer>
-    <div class="centerx">
-      <vs-button @click="answer1=!answer1" vs-color="primary" vs-type="filled">{{!answer1?'Open Answers':'Close Answers'}}</vs-button>
-
-      <vs-alert :vs-active.sync="answer1" vs-closable>
-        <vue-editor v-model="content"></vue-editor>
-      </vs-alert>
-
-      <vs-alert :vs-active.sync="answer1" :vs-icon.sync="icon1" vs-closable>
-
-        <vs-row>
-          <h3>USER ID</h3>
-        </vs-row>
-        <vs-row>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
-          </p>
-        </vs-row>
-        <vs-row>
-          <vs-col vs-type="flex" vs-justify="flex-start" vs-align="flex-start" vs-sm="12" vs-w="8">
-            <md-button class="md-fab md-mini md-plain">
-              <i class="material-icons">
-                              thumb_down
-                            </i>
-            </md-button>
-            <vs-avatar :vs-badge="badge1" vs-text="Luisdaniel" vs-size="large" />
-            <md-button class="md-fab md-mini md-plain">
-              <i class="material-icons">
-                              thumb_up
-                            </i>
-            </md-button>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="flex-end" vs-align="flex-end" vs-sm="12" vs-w="4">
-            <md-button class="md-fab md-mini md-plain">
-              <md-icon>edit</md-icon>
-            </md-button>
-          </vs-col>
-        </vs-row>
-      </vs-alert>
+  <div class="body-background">
+    <div class="row" style="margin: 5% 0 0 0;">
+      <div class="col s12 m12 slide-fwd-bottom" v-for='question in questions'>
+        <div class="card">
+          <div class="card-content">
+            <div class="row">
+              <div class="col">
+                <span class="card-title">{{ question.title }}</span>
+                <pre style="color:grey;">From: {{ question.UserId.username }}</pre>
+              </div>
+              <div class="col right" style="margin: -1% 0 0 0;">
+                <pre style="color:grey;">{{ question.time }}</pre>
+              </div>
+            </div>
+            <div class="" style="margin: -1% 3% 0 4%;">
+              <article class="">
+                <p >{{ question.description.split('<\/p>')[0].split(';">')[1] }} . . . </p>
+              </article>
+            </div>
+            <br>
+            <div class="row" style="margin: 0 0 0 -1%;">
+              <div class="col">
+                <pre style="color:grey;">Comments: {{ question.answer.length }}</pre>
+              </div>
+              <div class="col">
+                <pre style="color:grey;">Upvotes: {{ question.votes.length }}</pre>
+              </div>
+              <div class="col">
+                <pre style="color:grey;">Downvotes: {{ question.downvotes.length }}</pre>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="text-align:right;">
+            <a class="btn card waves-effect waves-dark teal darken-4" style="position:static; margin: 0 0 0 0;" @click='openDetail(question)'>OPEN</a>
+          </div>
+        </div>
+      </div>
     </div>
-  </vs-card-footer>
-</vs-card>
+  </div>
 </template>
 
 <script>
-import {
-  VueEditor
-} from 'vue2-editor'
+import Vueditor from 'vueditor'
+
 export default {
-  components: {
-    VueEditor
+  created () {
+    this.getAllQuestion()
+    this.$store.dispatch('UserData', localStorage.getItem('authorization').split('*#$_.')[1])
   },
-  data() {
-    return {
-      badge1: 10,
-      icon1: 'sms',
-      answer1: false,
-      content: '<h1>Some initial content</h1>'
+  components : (
+    Vueditor
+  ),
+  computed: {
+    questions () {
+      return this.$store.state.questions
+    }
+  },
+  methods: {
+    getAllQuestion () {
+      this.$store.dispatch('getAllQuestion')
+    },
+    openDetail (question) {
+      this.$store.dispatch('getAnswer', question._id)
+      this.$store.dispatch('openDetail', question)
+      this.$router.push('detail')
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="css">
+  .body-background{
+    text-align: left;
+    height: 100%;
+    width: 100%;
+  }
+  article {
+    display: block;
+  }
+  .slide-fwd-bottom {
+  	-webkit-animation: slide-fwd-bottom 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  	        animation: slide-fwd-bottom 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  }
+  /* ----------------------------------------------
+   * Generated by Animista on 2018-7-2 19:13:53
+   * w: http://animista.net, t: @cssanimista
+   * ---------------------------------------------- */
+
+  /**
+   * ----------------------------------------
+   * animation slide-fwd-bottom
+   * ----------------------------------------
+   */
+  @-webkit-keyframes slide-fwd-bottom {
+    0% {
+      -webkit-transform: translateZ(0) translateY(-110%);
+              transform: translateZ(0) translateY(-110%);
+    }
+    100% {
+      -webkit-transform: translateZ(160px) translateY(-10%);
+              transform: translateZ(160px) translateY(0px);
+    }
+  }
+  @keyframes slide-fwd-bottom {
+    0% {
+      -webkit-transform: translateZ(0) translateY(-110%);
+              transform: translateZ(0) translateY(-110%);
+    }
+    100% {
+      -webkit-transform: translateZ(160px) translateY(-10%);
+              transform: translateZ(160px) translateY(0px);
+    }
+  }
 </style>

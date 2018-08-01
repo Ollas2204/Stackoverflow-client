@@ -1,39 +1,35 @@
-
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import Vuesax from 'vuesax'
+import Vueditor from 'vueditor'
 
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.min.css'
-
-
-
-
-
-import 'vuesax/dist/vuesax.css' //Vuesax styles
-import 'material-icons/iconfont/material-icons.css';
-
+import 'vueditor/dist/style/vueditor.min.css'
 
 Vue.config.productionTip = false
-
-Vue.use(VueMaterial)
-Vue.use(Vuesax, {
-  theme:{
-    colors:{
-      primary:'#5b3cc4',
-      success:'rgb(23, 201, 100)',
-      danger:'rgb(242, 19, 93)',
-      warning:'rgb(255, 130, 0)',
-      dark:'rgb(36, 33, 69)'
-    }
-  }
-})
-
 
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+let config = {
+  toolbar: [
+    'removeFormat', 'undo', '|', 'elements', 'fontName', 'fontSize', 'foreColor', 'backColor', 'divider',
+    'bold', 'italic', 'underline', 'strikeThrough', 'links', 'divider', 'subscript', 'superscript',
+    'divider', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', '|', 'indent', 'outdent',
+    'insertOrderedList', 'insertUnorderedList', '|', 'emoji', 'picture', 'tables', '|', 'switchView'
+  ],
+  fontName: [
+    {val: 'arial black'},
+    {val: 'times new roman'},
+    {val: 'Courier New'}
+  ],
+  fontSize: ['12px', '14px', '16px', '18px', '0.8rem', '1.0rem', '1.2rem', '1.5rem', '2.0rem'],
+  uploadUrl: ''
+}
+
+Vue.use(Vuex)
+Vue.use(Vueditor, config)

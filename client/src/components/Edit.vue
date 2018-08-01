@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="container">
     <div id="" class="card left grey lighten-2 scale-up-center" style="height: 88%; width: 125%; margin: 10% 0 0 -10%; padding: 0 0 0 0; position:static;">
       <div class="container">

@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <nav class="header" style="; position:fixed;">
     <div class="nav-wrapper">
       <a class="brand-logo left" style="margin-left:-43%; font-size:15px; cursor:pointer;" @click='backToQuestion'><b>HACKTIV-OVERFLOW</b></a>
@@ -71,7 +71,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 ul {
   list-style-type: none;
   padding: 0;

@@ -87,7 +87,7 @@ export default {
     deleteDetail (question) {
       axios({
         method: 'delete',
-        url: `http://localhost:3000/question/${question._id}`
+        url: `http://35.240.205.140/question/${question._id}`
       }).then(response => {
         swal({
           text: `Article with title ${response.data.title} was deleted!`,

@@ -188,7 +188,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
   .body-background{
     text-align: left;
     height: 100%;

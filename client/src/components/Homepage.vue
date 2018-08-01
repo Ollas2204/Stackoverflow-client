@@ -113,7 +113,7 @@ export default {
 
       axios({
         method: 'post',
-        url: 'http://localhost:3000/users',
+        url: 'http://35.240.205.140/users',
         data: user
       })
       .then(response => {
@@ -200,7 +200,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style scoped>
 h3 {
   margin: 40px 0 0;
 }
